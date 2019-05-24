@@ -50,6 +50,7 @@ class Game extends React.Component {
       }],
       stepNumber: 0,
       xIsNext: true,
+      historyAscOrder: true,
     }
   }
 
@@ -73,12 +74,16 @@ class Game extends React.Component {
       );
     });
 
+    if (!this.state.historyAscOrder) moves.reverse();
+
     let status;
     if (winner) {
       status = 'Winner: ' + winner;
     } else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
+
+    let sortOrder = 'Sorted by ' + (this.state.historyAscOrder ? 'ascending' : 'descending') + ' order'
 
     return (
       <div className="game">
@@ -90,10 +95,23 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
+          <div>
+            <button
+              onClick={() => this.handleSortToggle()}
+            >
+              {sortOrder}
+            </button>
+          </div>
           <ol>{moves}</ol>
         </div>
       </div>
     );
+  }
+
+  handleSortToggle() {
+    this.setState({
+      historyAscOrder: !this.state.historyAscOrder
+    });
   }
 
   handleClick(i) {
