@@ -119,9 +119,9 @@ class Game extends React.Component {
   }
 
   handleSortToggle() {
-    this.setState({
-      historyAscOrder: !this.state.historyAscOrder
-    });
+    this.setState((state, props) => ({
+      historyAscOrder: !state.historyAscOrder
+    }));
   }
 
   handleClick(i) {
@@ -136,7 +136,7 @@ class Game extends React.Component {
     const colNum = i % 3;
 
     squares[i] = this.state.xIsNext ? 'X' : 'O';
-    this.setState({
+    this.setState((state, props) => ({
       history: history.concat([{
         squares: squares,
         moveRow: rowNum,
@@ -144,7 +144,7 @@ class Game extends React.Component {
       }]),
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
-    });
+    }));
   }
 
   jumpTo(step) {
